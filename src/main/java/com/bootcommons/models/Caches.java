@@ -1,4 +1,4 @@
-package com.example.bootcommons.models;
+package com.bootcommons.models;
 
 import lombok.Getter;
 

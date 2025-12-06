@@ -1,4 +1,4 @@
-package com.example.bootcommons.services;
+package com.bootcommons.services;
 
 public interface CacheService<K, V> {
     V save(K key, V value);
