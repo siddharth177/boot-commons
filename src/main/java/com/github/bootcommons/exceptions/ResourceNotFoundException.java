@@ -1,4 +1,4 @@
-package com.helper.bootcommons.exceptions;
+package com.github.bootcommons.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

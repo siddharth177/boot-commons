@@ -31,9 +31,9 @@ To use `boot-commons` in your project, add the following dependency to your `pom
 
 ```xml
 <dependency>
-  <groupId>com.helper</groupId>
-  <artifactId>boot-commons</artifactId>
-  <version>1.4.0</version>
+    <groupId>com.github</groupId>
+    <artifactId>boot-commons</artifactId>
+    <version>1.4.0</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@ public static void delay(int seconds)
 
 **Example**
 ```java
-import com.helper.bootcommons.utils.Util;
+import com.github.bootcommons.utils.Util;
 
 public class MyService {
     public void processWithDelay() {
@@ -85,7 +85,7 @@ public static <T> boolean nullOrEmpty(Set<T> set)
 
 **String**
 ```java
-import com.helper.bootcommons.utils.Util;
+import com.github.bootcommons.utils.Util;
 
 String myString = "";
 if (Util.nullOrEmpty(myString)) {
@@ -95,7 +95,7 @@ if (Util.nullOrEmpty(myString)) {
 
 **List**
 ```java
-import com.helper.bootcommons.utils.Util;
+import com.github.bootcommons.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +148,7 @@ To use the `CacheService`, create a concrete implementation of the interface and
 
 **Example Implementation**
 ```java
-import com.helper.bootcommons.services.CacheService;
+import com.github.bootcommons.services.CacheService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -204,7 +204,7 @@ The exception handler is enabled automatically. To use it, you can throw a `Reso
 
 **Example**
 ```java
-import com.helper.bootcommons.exceptions.ResourceNotFoundException;
+import com.github.bootcommons.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -246,7 +246,7 @@ The `Auditable` class is a `@MappedSuperclass` that contains the following field
 1.  **Extend the `Auditable` class** in your JPA entity. The generic `U` represents the type of the user identifier (e.g., `Long`, `String`).
 
     ```java
-    import com.helper.bootcommons.entities.Auditable;
+    import com.github.bootcommons.entities.Auditable;
     import jakarta.persistence.Entity;
     import jakarta.persistence.Id;
 

@@ -1,4 +1,4 @@
-package com.helper.bootcommons.services;
+package com.github.bootcommons.services;
 
 public interface CacheService<K, V> {
     V save(K key, V value);

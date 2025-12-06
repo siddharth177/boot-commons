@@ -1,4 +1,4 @@
-package com.helper.bootcommons.utils;
+package com.github.bootcommons.utils;
 
 import java.util.List;
 import java.util.Map;

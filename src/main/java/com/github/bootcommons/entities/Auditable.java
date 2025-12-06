@@ -1,4 +1,4 @@
-package com.helper.bootcommons.entities;
+package com.github.bootcommons.entities;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

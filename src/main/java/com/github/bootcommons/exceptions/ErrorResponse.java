@@ -1,4 +1,4 @@
-package com.helper.bootcommons.exceptions;
+package com.github.bootcommons.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.helper.bootcommons.models;
+package com.github.bootcommons.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
