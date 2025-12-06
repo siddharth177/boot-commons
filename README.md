@@ -18,6 +18,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
     - [Swagger Configuration](#swagger-configuration)
     - [Cache Service](#cache-service)
     - [Global Exception Handler](#global-exception-handler)
+    - [JPA Auditing Base Entity](#jpa-auditing-base-entity)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -31,7 +32,7 @@ To use `boot-commons` in your project, add the following dependency to your `pom
 <dependency>
   <groupId>com.helper</groupId>
   <artifactId>boot-commons</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -226,6 +227,69 @@ When `findObject` is called with an invalid ID, the `GlobalExceptionHandler` wil
   "timestamp": "2023-10-27T10:30:00.123456"
 }
 ```
+
+### JPA Auditing Base Entity
+
+`boot-commons` provides an `Auditable` base class that you can extend in your JPA entities to automatically track when a record is created or updated, and by whom.
+
+**How It Works**
+
+The `Auditable` class is a `@MappedSuperclass` that contains the following fields:
+- `createdAt`: The timestamp when the entity was created.
+- `createdBy`: The user who created the entity.
+- `updatedAt`: The timestamp when the entity was last updated.
+- `updatedBy`: The user who last updated the entity.
+
+**Usage**
+
+1.  **Extend the `Auditable` class** in your JPA entity. The generic `U` represents the type of the user identifier (e.g., `Long`, `String`).
+
+    ```java
+    import com.helper.bootcommons.entities.Auditable;
+    import jakarta.persistence.Entity;
+    import jakarta.persistence.Id;
+
+    @Entity
+    public class MyEntity extends Auditable<String> {
+        @Id
+        private Long id;
+        // ... other fields
+    }
+    ```
+
+2.  **Enable JPA Auditing** in your main application class or a configuration class.
+
+    ```java
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+    @Configuration
+    @EnableJpaAuditing
+    public class JpaConfig {
+    }
+    ```
+
+3.  **Provide an `AuditorAware` bean**. To automatically populate the `createdBy` and `updatedBy` fields, you need to provide a bean that tells Spring Security who the current user is.
+
+    ```java
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.data.domain.AuditorAware;
+    import org.springframework.security.core.context.SecurityContextHolder;
+
+    import java.util.Optional;
+
+    @Configuration
+    public class AuditorAwareConfig {
+
+        @Bean
+        public AuditorAware<String> auditorProvider() {
+            return () -> Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication().getName());
+        }
+    }
+    ```
+
+With this setup, the `createdAt`, `createdBy`, `updatedAt`, and `updatedBy` fields will be automatically managed by JPA.
 
 ---
 
