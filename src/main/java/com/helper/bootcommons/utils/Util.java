@@ -1,4 +1,4 @@
-package com.bootcommons.utils;
+package com.helper.bootcommons.utils;
 
 public class Util {
     public static void delay(int seconds) {

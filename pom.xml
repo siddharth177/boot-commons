@@ -8,9 +8,9 @@
         <version>4.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com</groupId>
+    <groupId>com.helper</groupId>
     <artifactId>boot-commons</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>boot-commons</name>
     <description>boot-commons</description>
     <url/>

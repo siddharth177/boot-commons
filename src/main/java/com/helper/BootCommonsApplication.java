@@ -1,4 +1,4 @@
-package com.bootcommons;
+package com.helper.bootcommons;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
