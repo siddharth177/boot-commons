@@ -16,6 +16,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
       - [`delay`](#delay)
       - [`nullOrEmpty`](#nullorempty)
     - [Swagger Configuration](#swagger-configuration)
+    - [Cache Service](#cache-service)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -122,6 +123,66 @@ bootcommons.swagger.groups=public,admin
 ```
 
 The `SwaggerConfig` will automatically detect these properties and generate the corresponding OpenAPI documentation. The `bootcommons.swagger.groups` property allows you to define multiple API groups, which can be useful for organizing your endpoints.
+
+### Cache Service
+
+The `CacheService` interface provides a generic contract for a key-value cache. This allows you to create a standardized caching layer in your application, with the flexibility to switch between different cache implementations (e.g., in-memory, Redis, Hazelcast) without changing your business logic.
+
+**Interface**
+```java
+public interface CacheService<K, V> {
+    V save(K key, V value);
+    V get(K key);
+    void remove(K key);
+    void clear();
+    boolean contains(K key);
+}
+```
+
+**Usage**
+
+To use the `CacheService`, create a concrete implementation of the interface and register it as a Spring bean. You can then inject the `CacheService` into any of your services or components.
+
+**Example Implementation**
+```java
+import com.helper.bootcommons.services.CacheService;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+public class InMemoryCacheService<K, V> implements CacheService<K, V> {
+
+    private final Map<K, V> cache = new ConcurrentHashMap<>();
+
+    @Override
+    public V save(K key, V value) {
+        cache.put(key, value);
+        return value;
+    }
+
+    @Override
+    public V get(K key) {
+        return cache.get(key);
+    }
+
+    @Override
+    public void remove(K key) {
+        cache.remove(key);
+    }
+
+    @Override
+    public void clear() {
+        cache.clear();
+    }
+
+    @Override
+    public boolean contains(K key) {
+        return cache.containsKey(key);
+    }
+}
+```
 
 ---
 
