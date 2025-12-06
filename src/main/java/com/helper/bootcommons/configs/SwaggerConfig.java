@@ -1,6 +1,7 @@
 package com.helper.bootcommons.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ public class SwaggerConfig {
             @Value("${bootcommons.swagger.contact.email}") String contactEmail) {
 
         OpenAPI openAPI = new OpenAPI();
+        openAPI.setInfo(new Info());
         openAPI.getInfo().setTitle(title);
         openAPI.getInfo().setDescription(description);
         openAPI.getInfo().setVersion(version);
