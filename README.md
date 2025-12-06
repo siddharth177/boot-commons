@@ -31,7 +31,7 @@ To use `boot-commons` in your project, add the following dependency to your `pom
 <dependency>
   <groupId>com.helper</groupId>
   <artifactId>boot-commons</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
