@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.helper</groupId>
     <artifactId>boot-commons</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <name>boot-commons</name>
     <description>A collection of common utility classes and components to accelerate Spring Boot application development.</description>
     <url>https://github.com/siddharth177/boot-commons</url>

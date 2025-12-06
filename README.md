@@ -19,6 +19,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
     - [Cache Service](#cache-service)
     - [Global Exception Handler](#global-exception-handler)
     - [JPA Auditing Base Entity](#jpa-auditing-base-entity)
+    - [Configurable CORS Mapping](#configurable-cors-mapping)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -32,7 +33,7 @@ To use `boot-commons` in your project, add the following dependency to your `pom
 <dependency>
   <groupId>com.helper</groupId>
   <artifactId>boot-commons</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
@@ -290,6 +291,32 @@ The `Auditable` class is a `@MappedSuperclass` that contains the following field
     ```
 
 With this setup, the `createdAt`, `createdBy`, `updatedAt`, and `updatedBy` fields will be automatically managed by JPA.
+
+### Configurable CORS Mapping
+
+`boot-commons` provides a `CorsConfig` to centrally manage Cross-Origin Resource Sharing (CORS) settings. This allows you to define your CORS policy in your `application.properties` file, avoiding the need to scatter `@CrossOrigin` annotations across your controllers.
+
+**How It Works**
+
+The `CorsConfig` is a `WebMvcConfigurer` that applies a global CORS configuration to all endpoints (`/**`). It is enabled automatically and can be configured with the following properties:
+
+- `bootcommons.cors.allowed-origins`: A comma-separated list of allowed origins. Defaults to `*` (all origins).
+- `bootcommons.cors.allowed-methods`: A comma-separated list of allowed HTTP methods. Defaults to `GET,POST,PUT,DELETE,OPTIONS`.
+- `bootcommons.cors.allowed-headers`: A comma-separated list of allowed headers. Defaults to `*` (all headers).
+- `bootcommons.cors.allow-credentials`: Whether to allow credentials. Defaults to `true`.
+
+**Usage**
+
+To customize the CORS settings, add the desired properties to your `application.properties` file.
+
+**Example**
+```properties
+# CORS Configuration
+bootcommons.cors.allowed-origins=http://localhost:3000,https://my-frontend.com
+bootcommons.cors.allowed-methods=GET,POST
+```
+
+If no properties are provided, the configuration will use sensible defaults, allowing all origins, common HTTP methods, and all headers.
 
 ---
 
