@@ -10,21 +10,26 @@
     </parent>
     <groupId>com.helper</groupId>
     <artifactId>boot-commons</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>boot-commons</name>
-    <description>boot-commons</description>
-    <url/>
+    <description>A collection of common utility classes and components to accelerate Spring Boot application development.</description>
+    <url>https://github.com/siddharth177/boot-commons</url>
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <name>Siddharth Katiyar</name>
+            <email>siddharth.dev177@gmail.com</email>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:git://github.com/siddharth177/boot-commons.git</connection>
+        <developerConnection>scm:git:ssh://github.com:siddharth177/boot-commons.git</developerConnection>
+        <url>https://github.com/siddharth177/boot-commons/tree/main</url>
     </scm>
     <properties>
         <java.version>21</java.version>
