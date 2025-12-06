@@ -15,6 +15,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
     - [Util](#util)
       - [`delay`](#delay)
       - [`nullOrEmpty`](#nullorempty)
+    - [Swagger Configuration](#swagger-configuration)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -99,6 +100,28 @@ if (Util.nullOrEmpty(myList)) {
     System.out.println("List is null or empty.");
 }
 ```
+
+### Swagger Configuration
+
+`boot-commons` provides a pre-configured `SwaggerConfig` that can be effortlessly plugged into any Spring Boot application to generate basic Swagger API documentation. This allows you to set up and customize Swagger with minimal effort, directly from your `application.properties` file.
+
+To enable and configure Swagger, simply add the following properties to your `application.properties`:
+
+```properties
+# Swagger API Information
+bootcommons.swagger.title=My Application API
+bootcommons.swagger.description=A sample API for my awesome application
+bootcommons.swagger.version=1.0.0
+
+# Contact Information
+bootcommons.swagger.contact.name=Your Name
+bootcommons.swagger.contact.email=your.email@example.com
+
+# API Groups (comma-separated)
+bootcommons.swagger.groups=public,admin
+```
+
+The `SwaggerConfig` will automatically detect these properties and generate the corresponding OpenAPI documentation. The `bootcommons.swagger.groups` property allows you to define multiple API groups, which can be useful for organizing your endpoints.
 
 ---
 
