@@ -17,6 +17,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
       - [`nullOrEmpty`](#nullorempty)
     - [Swagger Configuration](#swagger-configuration)
     - [Cache Service](#cache-service)
+    - [Global Exception Handler](#global-exception-handler)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -181,6 +182,48 @@ public class InMemoryCacheService<K, V> implements CacheService<K, V> {
     public boolean contains(K key) {
         return cache.containsKey(key);
     }
+}
+```
+
+### Global Exception Handler
+
+`boot-commons` includes a `GlobalExceptionHandler` to provide a consistent and centralized way of handling exceptions in your REST APIs. This handler automatically catches exceptions and formats them into a standardized `ErrorResponse` JSON object, saving you from writing repetitive `try-catch` blocks in your controllers.
+
+**How It Works**
+
+The `GlobalExceptionHandler` uses Spring's `@RestControllerAdvice` to intercept exceptions thrown from any controller. It currently handles:
+
+- `ResourceNotFoundException`: Returns an `HTTP 404 Not Found` status.
+- `Exception`: Catches any other unhandled exception and returns an `HTTP 500 Internal Server Error` status.
+
+**Usage**
+
+The exception handler is enabled automatically. To use it, you can throw a `ResourceNotFoundException` from your services or controllers when a resource cannot be found.
+
+**Example**
+```java
+import com.helper.bootcommons.exceptions.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+    public MyObject findObject(String id) {
+        // ... logic to find the object
+        if (object == null) {
+            throw new ResourceNotFoundException("Object with id " + id + " not found");
+        }
+        return object;
+    }
+}
+```
+
+When `findObject` is called with an invalid ID, the `GlobalExceptionHandler` will catch the `ResourceNotFoundException` and return a JSON response like this:
+
+```json
+{
+  "statusCode": 404,
+  "message": "Object with id 123 not found",
+  "timestamp": "2023-10-27T10:30:00.123456"
 }
 ```
 
