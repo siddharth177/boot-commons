@@ -23,6 +23,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
     - [JPA Auditing Base Entity](#jpa-auditing-base-entity)
     - [Configurable CORS Mapping](#configurable-cors-mapping)
     - [Generic CRUD Service](#generic-crud-service)
+    - [AOP Utilities](#aop-utilities)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -209,6 +210,7 @@ public class InMemoryCacheService<K, V> implements CacheService<K, V> {
 The `GlobalExceptionHandler` uses Spring's `@RestControllerAdvice` to intercept exceptions thrown from any controller. It currently handles:
 
 - `ResourceNotFoundException`: Returns an `HTTP 404 Not Found` status.
+- `ErrorResponse`: Handles the `ErrorResponse` exception thrown by the `@HandleException` aspect and returns a response with the specified status code and message.
 - `Exception`: Catches any other unhandled exception and returns an `HTTP 500 Internal Server Error` status.
 
 **Usage**
@@ -430,6 +432,101 @@ With this setup, the following endpoints are automatically available:
 -   `DELETE /api/products/{id}`: Delete a product.
 
 ---
+
+### AOP Utilities
+
+`boot-commons` provides a powerful set of AOP (Aspect-Oriented Programming) utilities that allow you to add cross-cutting concerns like logging, timing, and exception handling to your application with minimal boilerplate.
+
+**How It Works**
+
+The AOP module is enabled automatically via `@EnableAspectJAutoProxy`. You can start using the following annotations right away. The logging and timing functionalities are handled by separate aspects (`LoggingAspect` and `TimingAspect`) for better modularity.
+
+#### `@Loggable`
+
+The `@Loggable` annotation provides comprehensive logging for any method. When applied, it automatically logs method entry, arguments, exit, and the return value.
+
+**Usage**
+
+```java
+import io.github.siddharth177.bootcommons.aop.annotations.Loggable;
+
+@Service
+public class MyService {
+    @Loggable
+    public String processData(String input) {
+        // ... business logic
+        return "Processed: " + input;
+    }
+}
+```
+
+#### `@Timed`
+
+The `@Timed` annotation logs the execution time of a method in milliseconds. This is useful for performance monitoring and identifying bottlenecks.
+
+**Usage**
+
+```java
+import io.github.siddharth177.bootcommons.aop.annotations.Timed;
+
+@Service
+public class MyService {
+    @Timed
+    public void runLongTask() {
+        // ... time-consuming operation
+    }
+}
+```
+
+#### `@HandleException`
+
+The `@HandleException` annotation provides a declarative way to handle exceptions and return a standardized `ErrorResponse`. When a method annotated with `@HandleException` throws an exception, the `ExceptionAspect` catches it, creates an `ErrorResponse` with the specified `statusCode` and `message`, and throws it. The `GlobalExceptionHandler` then catches this `ErrorResponse` and returns it as a JSON response.
+
+**Usage**
+
+You can specify a custom `HttpStatus` and message for the error response.
+
+```java
+import io.github.siddharth177.bootcommons.aop.annotations.HandleException;
+import org.springframework.http.HttpStatus;
+import java.io.IOException;
+
+@Service
+public class MyService {
+    @HandleException(statusCode = HttpStatus.BAD_REQUEST, message = "Failed to read the file.")
+    public void readFile(String path) throws IOException {
+        // ... logic that might throw an exception
+    }
+}
+```
+
+When `readFile` throws an `IOException`, the `GlobalExceptionHandler` will return a 400 Bad Request response with the specified message.
+
+#### `@ThrowIf`
+
+The `@ThrowIf` annotation allows you to conditionally throw an exception based on a SpEL expression evaluated against the method's return value. This is useful for enforcing post-conditions on your methods.
+
+**Usage**
+
+The following example demonstrates how to throw an `IllegalArgumentException` if a method returns an empty list.
+
+```java
+import io.github.siddharth177.bootcommons.aop.annotations.ThrowIf;
+import java.util.List;
+
+@Service
+public class MyService {
+    @ThrowIf(
+        expression = "#returnValue.isEmpty()",
+        exception = IllegalArgumentException.class,
+        message = "Returned list cannot be empty"
+    )
+    public List<String> getUsers() {
+        // ... business logic
+        return List.of();
+    }
+}
+```
 
 ## Contributing
 
