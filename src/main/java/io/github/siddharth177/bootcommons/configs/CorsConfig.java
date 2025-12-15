@@ -1,4 +1,4 @@
-package com.github.bootcommons.configs;
+package io.github.siddharth177.bootcommons.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

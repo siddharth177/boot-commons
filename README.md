@@ -3,6 +3,8 @@
 A collection of common utility classes and components to accelerate Spring Boot application development.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![GitHub Downloads](https://img.shields.io/github/downloads/siddharth177/boot-commons/total)
+![Maven Package Version](https://img.shields.io/maven-metadata/v?metadataUrl=https://repo.maven.apache.org/maven2/com/github/boot-commons/boot-commons/maven-metadata.xml)
 
 ---
 
@@ -33,7 +35,7 @@ To use `boot-commons` in your project, add the following dependency to your `pom
 <dependency>
     <groupId>com.github</groupId>
     <artifactId>boot-commons</artifactId>
-    <version>1.4.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -57,8 +59,9 @@ public static void delay(int seconds)
 ```
 
 **Example**
+
 ```java
-import com.github.bootcommons.utils.Util;
+import io.github.siddharth177.bootcommons.utils.Util;
 
 public class MyService {
     public void processWithDelay() {
@@ -83,25 +86,33 @@ public static <T> boolean nullOrEmpty(Set<T> set)
 
 **Examples**
 
-**String**
+**String*
 ```java
-import com.github.bootcommons.utils.Util;
+
 
 String myString = "";
 if (Util.nullOrEmpty(myString)) {
     System.out.println("String is null or empty.");
 }
+```);
+}
 ```
 
 **List**
+
 ```java
-import com.github.bootcommons.utils.Util;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 List<String> myList = new ArrayList<>();
-if (Util.nullOrEmpty(myList)) {
-    System.out.println("List is null or empty.");
+if(Util.
+
+nullOrEmpty(myList)){
+        System.out.
+
+println("List is null or empty.");
 }
 ```
 
@@ -147,8 +158,9 @@ public interface CacheService<K, V> {
 To use the `CacheService`, create a concrete implementation of the interface and register it as a Spring bean. You can then inject the `CacheService` into any of your services or components.
 
 **Example Implementation**
+
 ```java
-import com.github.bootcommons.services.CacheService;
+import io.github.siddharth177.bootcommons.services.CacheService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -203,8 +215,9 @@ The `GlobalExceptionHandler` uses Spring's `@RestControllerAdvice` to intercept 
 The exception handler is enabled automatically. To use it, you can throw a `ResourceNotFoundException` from your services or controllers when a resource cannot be found.
 
 **Example**
+
 ```java
-import com.github.bootcommons.exceptions.ResourceNotFoundException;
+import io.github.siddharth177.bootcommons.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -243,20 +256,20 @@ The `Auditable` class is a `@MappedSuperclass` that contains the following field
 
 **Usage**
 
-1.  **Extend the `Auditable` class** in your JPA entity. The generic `U` represents the type of the user identifier (e.g., `Long`, `String`).
+1. **Extend the `Auditable` class** in your JPA entity. The generic `U` represents the type of the user identifier (e.g., `Long`, `String`).
 
-    ```java
-    import com.github.bootcommons.entities.Auditable;
-    import jakarta.persistence.Entity;
-    import jakarta.persistence.Id;
+   ```java
+   import io.github.siddharth177.bootcommons.entities.Auditable;
+   import jakarta.persistence.Entity;
+   import jakarta.persistence.Id;
 
-    @Entity
-    public class MyEntity extends Auditable<String> {
-        @Id
-        private Long id;
-        // ... other fields
-    }
-    ```
+   @Entity
+   public class MyEntity extends Auditable<String> {
+       @Id
+       private Long id;
+       // ... other fields
+   }
+   ```
 
 2.  **Enable JPA Auditing** in your main application class or a configuration class.
 
@@ -328,4 +341,4 @@ Contributions are welcome! If you have a feature request, bug report, or want to
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/siddharth177/boot-commons?tab=readme-ov-file#boot-commons) file for details.

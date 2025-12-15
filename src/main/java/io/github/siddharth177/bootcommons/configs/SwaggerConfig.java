@@ -1,4 +1,4 @@
-package com.github.bootcommons.configs;
+package io.github.siddharth177.bootcommons.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

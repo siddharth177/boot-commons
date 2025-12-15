@@ -1,4 +1,4 @@
-package com.github.bootcommons.exceptions;
+package io.github.siddharth177.bootcommons.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.github.bootcommons.exceptions;
+package io.github.siddharth177.bootcommons.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

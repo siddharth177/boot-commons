@@ -1,4 +1,4 @@
-package com.github.bootcommons.utils;
+package io.github.siddharth177.bootcommons.utils;
 
 import java.util.List;
 import java.util.Map;
