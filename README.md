@@ -4,7 +4,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![GitHub Downloads](https://img.shields.io/github/downloads/siddharth177/boot-commons/total)
-![Maven Package Version](https://img.shields.io/maven-metadata/v?metadataUrl=https://repo.maven.apache.org/maven2/com/github/boot-commons/boot-commons/maven-metadata.xml)
+![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
 
 ---
 
@@ -22,6 +22,7 @@ A collection of common utility classes and components to accelerate Spring Boot 
     - [Global Exception Handler](#global-exception-handler)
     - [JPA Auditing Base Entity](#jpa-auditing-base-entity)
     - [Configurable CORS Mapping](#configurable-cors-mapping)
+    - [Generic CRUD Service](#generic-crud-service)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -330,6 +331,103 @@ bootcommons.cors.allowed-methods=GET,POST
 ```
 
 If no properties are provided, the configuration will use sensible defaults, allowing all origins, common HTTP methods, and all headers.
+
+### Generic CRUD Service
+
+`boot-commons` provides a generic, reusable solution for implementing CRUD (Create, Read, Update, Delete) functionality with minimal boilerplate. This is achieved through a combination of a generic service (`BaseService`) and a generic controller (`GenericRestController`).
+
+**How It Works**
+
+1.  **`IBaseService<T, ID>`**: An interface that defines the standard contract for CRUD operations.
+2.  **`BaseService<T, ID>`**: An abstract class that provides a complete implementation of `IBaseService` using a `JpaRepository`.
+3.  **`GenericRestController<T, ID>`**: An abstract controller that exposes standard REST endpoints (`GET`, `POST`, `PUT`, `DELETE`) for an entity.
+
+By extending `BaseService` and `GenericRestController`, you can create a fully functional CRUD API for your entities in just a few lines of code.
+
+**Usage**
+
+Here’s a complete example of how to set up a CRUD API for a `Product` entity.
+
+**1. Define Your Entity**
+
+First, create your JPA entity.
+
+```java
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    // Getters and setters
+}
+```
+
+**2. Create a JPA Repository**
+
+Next, create a standard `JpaRepository` for your entity.
+
+```java
+import io.github.siddharth177.bootcommons.entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
+}
+```
+
+**3. Create a Service by Extending `BaseService`**
+
+Create a service class that extends `BaseService` and provide your repository in the constructor.
+
+```java
+import io.github.siddharth177.bootcommons.entities.Product;
+import io.github.siddharth177.bootcommons.repositories.ProductRepository;
+import io.github.siddharth177.bootcommons.services.BaseService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProductService extends BaseService<Product, Long> {
+    public ProductService(ProductRepository repository) {
+        super(repository);
+    }
+    // You can add custom business logic here if needed
+}
+```
+
+**4. Create a Controller by Extending `GenericRestController`**
+
+Finally, create a REST controller that extends `GenericRestController` and provide your service.
+
+```java
+import io.github.siddharth177.bootcommons.core.controller.GenericRestController;
+import io.github.siddharth177.bootcommons.entities.Product;
+import io.github.siddharth177.bootcommons.services.ProductService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController extends GenericRestController<Product, Long> {
+    public ProductController(ProductService service) {
+        super(service);
+    }
+}
+```
+
+With this setup, the following endpoints are automatically available:
+
+-   `POST /api/products`: Create a new product.
+-   `GET /api/products`: Get all products.
+-   `GET /api/products/{id}`: Get a product by its ID.
+-   `PUT /api/products/{id}`: Update a product.
+-   `DELETE /api/products/{id}`: Delete a product.
 
 ---
 
