@@ -17,4 +17,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy
 public class AopConfig {
+
+    /**
+     * Default constructor for {@code AopConfig}.
+     */
+    public AopConfig() {
+        // Default constructor
+    }
 }

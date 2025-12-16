@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Configuration class for Cross-Origin Resource Sharing (CORS).
+ */
 @Configuration
 public class CorsConfig {
 
@@ -21,6 +24,18 @@ public class CorsConfig {
     @Value("${bootcommons.cors.allow-credentials:true}")
     private boolean allowCredentials;
 
+    /**
+     * Default constructor for {@code CorsConfig}.
+     */
+    public CorsConfig() {
+        // Default constructor
+    }
+
+    /**
+     * Creates a {@link WebMvcConfigurer} bean to configure CORS.
+     *
+     * @return The {@link WebMvcConfigurer} bean.
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

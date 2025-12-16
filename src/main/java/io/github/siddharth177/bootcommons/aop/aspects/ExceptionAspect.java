@@ -2,7 +2,7 @@ package io.github.siddharth177.bootcommons.aop.aspects;
 
 import io.github.siddharth177.bootcommons.aop.annotations.HandleException;
 import io.github.siddharth177.bootcommons.aop.annotations.ThrowIf;
-import io.github.siddharth177.bootcommons.dto.ErrorResponse;
+import io.github.siddharth177.bootcommons.exceptions.ErrorResponse;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -27,7 +27,6 @@ import java.lang.reflect.Constructor;
  *     <li><b>Conditional Exception Throwing:</b> Conditionally throws exceptions based on a SpEL expression
  *     evaluated against the return value of methods annotated with {@code @ThrowIf}.</li>
  * </ul>
- * </p>
  */
 @Aspect
 @Component
@@ -40,8 +39,9 @@ public class ExceptionAspect {
      * An after-throwing advice that catches exceptions from methods annotated with {@code @HandleException},
      * wraps them in a {@link ErrorResponse}, and re-throws them.
      *
-     * @param joinPoint The join point.
-     * @param ex        The exception thrown by the method.
+     * @param joinPoint       The join point.
+     * @param handleException The {@code @HandleException} annotation instance.
+     * @param ex              The exception thrown by the method.
      */
     @AfterThrowing(pointcut = "@annotation(handleException)", throwing = "ex")
     public void handleException(JoinPoint joinPoint, HandleException handleException, Throwable ex) {
@@ -65,7 +65,7 @@ public class ExceptionAspect {
         StandardEvaluationContext context = new StandardEvaluationContext();
         context.setVariable("returnValue", returnValue);
 
-        boolean shouldThrow = parser.parseExpression(throwIf.expression()).getValue(context, Boolean.class);
+        boolean shouldThrow = Boolean.TRUE.equals(parser.parseExpression(throwIf.expression()).getValue(context, Boolean.class));
 
         if (shouldThrow) {
             Class<? extends Throwable> exceptionClass = throwIf.exception();
