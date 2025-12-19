@@ -21,7 +21,7 @@ public class TimingAspect {
     private static final Logger logger = LoggerFactory.getLogger(TimingAspect.class);
 
     /**
-     * An around advice that logs the execution time of a method annotated with {@code @Timed}.
+     * Around advice that logs the execution time of a method annotated with {@code @Timed}.
      *
      * @param joinPoint The proceeding join point.
      * @return The result of the method execution.

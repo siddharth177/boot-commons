@@ -23,7 +23,7 @@ public class LoggingAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     /**
-     * An around advice that logs the entry, exit, and execution time of a method
+     * Around advice that logs the entry, exit, and execution time of a method
      * annotated with {@code @Loggable}.
      *
      * @param joinPoint The proceeding join point.
